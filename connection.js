@@ -1,10 +1,12 @@
+require('dotenv').config()
+// console.log(process.env);
 const knex = require('knex')({
     client : 'mysql',
     connection : {
-        host : 'localhost',
+        host : process.env.HOST,
         user : 'root',
-        password : "Shanti123#@!",
-        database : 'student_details'
+        password : process.env.PASSWORD,
+        database : process.env.DATABASE
     }
 })
 
@@ -12,11 +14,13 @@ knex.schema.hasTable('user').then( (exits) =>{
     if(!exits){
         return knex.schema.createTable('user',(t) => {
             t.increments("id").primary();
-            t.string('firstName',50);
-            t.string('lastName',40);
-            t.string('email',40);
-            t.string("password",20)
+            t.string('firstName');
+            t.string('lastName');
+            t.string('email');
+            t.string("password")
         })
+    }else{
+        // console.log(" Table Created!!!!!!!!!!!!!!!!!");
     }
 
 })
